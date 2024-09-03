@@ -27,6 +27,16 @@ public class WeatherAlertController {
         return ResponseEntity.ok(weatherAlerts);
     }
 
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<WeatherAlert> findWeatherById(@PathVariable Long id) {
+        log.info("Fetching weather alert with ID: {}", id);
+
+        WeatherAlert weatherAlert = weatherAlertService.findWeatherById(id);
+        return ResponseEntity.ok(weatherAlert);
+    }
+
+
+
     // Create new weather alert
     @PostMapping("/create")
     public ResponseEntity<WeatherAlert> createWeatherAlert(@Valid @RequestBody WeatherAlert weatherAlert) {

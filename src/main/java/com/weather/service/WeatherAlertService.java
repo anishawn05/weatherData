@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -54,6 +55,14 @@ public class WeatherAlertService {
             log.warn("Weather alert with ID {} not found.", id);
             return false; // Return false if entity doesn't exist
         }
+    }
+
+    @Transactional(readOnly = true)
+    public WeatherAlert findWeatherById(Long id) {
+        log.info("Fetching weather alert with ID: {}", id);
+
+        return weatherAlertRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Weather alert not found for ID: " + id));
     }
 
 }
